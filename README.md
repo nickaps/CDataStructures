@@ -5,7 +5,7 @@
 
 The goal for this project is to practice my C skills and refine
 my knowledge on data structures. I want to create several implementations
-of difference common data structures and algorithms using C. I want
+of different common data structures and algorithms using C. I want
 them to be memory safe and uphold to strict practices of memory management
 such as setting dangling pointers to NULL after freeing memory.
 
