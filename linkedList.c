@@ -62,7 +62,6 @@ void ListAdd(struct LinkedList* list, int value) {
 		list->head = node;
 		list->tail = node;
 		list->count += 1;
-		ListPrint(list);
 		return;
 	}
 	
@@ -73,8 +72,6 @@ void ListAdd(struct LinkedList* list, int value) {
 	list->tail = node;
 
 	list->count += 1;
-
-	ListPrint(list);
 }
 
 //	Removes value from LinkedList
@@ -121,6 +118,50 @@ int ListRemove(struct LinkedList* list, int value) {
 	return 0;
 }
 
+//	Removes value from LinkedList at specific index
+//
+int ListRemoveAt(struct LinkedList* list, int index) {
+	
+	if (index >= list->count) {
+		printf("invalid. index is outside range of list");
+		return 1;
+	}
+
+	int i = 0;
+	struct ListNode* current = list->head;
+
+	while (i < index) {
+		current = current->next;
+		i += 1; 
+	}
+
+	if (current != NULL) {
+		struct ListNode* tmp = current;
+		
+		if (current == list->head) {
+			current->next->prev = NULL;
+			tmp = current;	
+			list->head = current->next;
+			free(tmp);
+		}
+		else {
+			tmp = current;
+
+			current->next->prev = current->prev;
+			current->prev->next = current->next;
+
+			if (current == list->tail) {
+				list->tail = current->prev;
+			}
+
+			free(tmp);
+		}
+	}
+
+	return 0;
+
+}
+
 //	Snips tail node off of LinkedList
 //
 int ListSnip(struct LinkedList* list) {
@@ -138,9 +179,7 @@ int ListSnip(struct LinkedList* list) {
 		free(tmp);
 	}
 	
-	list->count -= 1;
-
-	ListPrint(list);	
+	list->count -= 1;	
 }
 
 //	Snips tail node off of Linked List
@@ -187,7 +226,11 @@ int main() {
 	ListAdd(list, 781);
 	ListAdd(list, 200);
 
-	ListSnipCount(list, list->count);
+	ListPrint(list);
+
+	ListRemoveAt(list, 2);
+
+	ListPrint(list);
 
 	FreeList(list);
 
