@@ -28,6 +28,7 @@ int ListSnip(struct LinkedList* list);
 int ListSnipCount(struct LinkedList* list, int snipCount);
 void ListDelete(struct LinkedList* list);
 void ListPrint(struct LinkedList* list);
+int ListFindAt(struct LinkedList* list, int index);
 
 
 //	Function Implementations
@@ -200,6 +201,24 @@ int ListSnipCount(struct LinkedList* list, int snipCount) {
 	}
 }
 
+//	Get the value at a certain index
+//
+int ListFindAt(struct LinkedList* list, int index) {
+	if (index >= list->count) {
+		printf("invalid. index is outside range of list ");
+		return -1;
+	}
+
+	int i = 0;
+	struct ListNode* current = list->head;
+	while (current != NULL && i < index) {
+		current = current->next;
+		i += 1;
+	}
+
+	return current->value;
+}
+
 //	Print the list to console using printf
 //
 void ListPrint(struct LinkedList* list) {
@@ -227,6 +246,8 @@ int main() {
 	ListAdd(list, 200);
 
 	ListPrint(list);
+
+    printf("%d\n", ListFindAt(list, 3));
 
 	ListRemoveAt(list, 2);
 
