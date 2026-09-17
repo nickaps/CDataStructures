@@ -29,6 +29,7 @@ int ListSnipCount(struct LinkedList* list, int snipCount);
 void ListDelete(struct LinkedList* list);
 void ListPrint(struct LinkedList* list);
 int ListFindAt(struct LinkedList* list, int index);
+int ListIndexOf(struct LinkedList* list, int value);
 
 
 //	Function Implementations
@@ -219,6 +220,25 @@ int ListFindAt(struct LinkedList* list, int index) {
 	return current->value;
 }
 
+//	Get the index of a certain value
+//
+int ListIndexOf(struct LinkedList* list, int value) {
+	struct ListNode* current = list->head;
+	int index = 0;
+
+	while (current != NULL && current->value != value) {
+		current = current->next;
+		index += 1;
+	}
+
+	if (current == NULL) {
+		return -1;
+	}
+
+	return current->value;
+
+}
+
 //	Print the list to console using printf
 //
 void ListPrint(struct LinkedList* list) {
@@ -240,18 +260,11 @@ int main() {
 
 	struct LinkedList* list = ListInit();
 	
-	ListAdd(list, 20);
-	ListAdd(list, 4040);
-	ListAdd(list, 781);
-	ListAdd(list, 200);
-
-	ListPrint(list);
-
-    printf("%d\n", ListFindAt(list, 3));
-
-	ListRemoveAt(list, 2);
-
-	ListPrint(list);
+	for (int i = 0; i < 40000000; i++) {
+		ListAdd(list, i * 3);
+	}
+	
+	printf("%d", ListFindAt(list, 39999999));
 
 	FreeList(list);
 
