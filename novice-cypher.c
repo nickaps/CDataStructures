@@ -59,7 +59,7 @@ void EncryptFile(char* filePath, int dflag, int k) {
 		return;
 	}
 
-	fwrite(content, 1, i + 1, file);
+	fwrite(content, 1, i, file);
 
 	fclose(file);
 }
