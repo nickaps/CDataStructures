@@ -10,5 +10,5 @@ them to be memory safe and uphold to strict practices of memory management
 such as setting dangling pointers to NULL after freeing memory.
 
 This has all been part of the learning process of coming back to
-my alraedy quite shaky knowledge of the C programming language.
+my already quite shaky knowledge of the C programming language.
 
