@@ -1,0 +1,6 @@
+
+Groceries:
+
+	-Eggs
+	-Milk
+	-Coffee
