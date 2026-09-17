@@ -14,6 +14,7 @@
 //
 //	So, I wonder if I can make a secure variation that
 //	reads and writes directly from/to the file.
+//
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -32,35 +33,57 @@ void EncryptFile(char* filePath, int dflag, int k);
 //
 void EncryptFile(char* filePath, int dflag, int k) {
 
+	//	Set the key equal to the value, k, by the mag, dflag
+	//
 	int key = k * dflag;
-
+	//
+	//	(rb) Open a file at filePath
+	//
 	FILE* file = fopen(filePath, "rb");
 	if (file == NULL) {
 		printf("could not open file.");
 		return;
 	}
-
+	//
+	//	Set content buffer
+	//
 	unsigned char content[BUFFERSIZE] = {0};
+	//
+	//	Set increment value; used as length
+	//
 	int i = 0;
-
+	//
+	//	Reserve space for character value
+	//
 	int ch;
 	while ((ch = fgetc(file)) != EOF && i < BUFFERSIZE) {
+		//	While not EOF continue to alter bytes
+		//	and add them to memory
+		//
 		if (ch != EOF) {
 			content[i] = (unsigned char)((ch + key) % 256);
 			i += 1;
 		}
 	}
-
+	//
+	//	Close file
+	//
 	fclose(file);
-
+	//
+	//	(wb) Open the file again at filePath
+	//
 	file = fopen(filePath, "wb");
 	if (file == NULL) {
 		printf("could not open file.");
 		return;
 	}
-
+	//
+	//	Overwrite all bytes in file with content
+	//
 	fwrite(content, 1, i, file);
-
+	//
+	//	Close file
+	//
 	fclose(file);
 }
 
@@ -74,9 +97,30 @@ int main (int argc, char** argv) {
 		return 1;
 	}
 
+	//	filePath - Which file to encrypt
+	//
 	char* filePath = argv[1];
-	int dflag = 1;		if (strcmp(argv[2], "-d") == 0) dflag = -1;
+	//
+	//	dflag - +/- magnitude for key value
+	//
+	int dflag = 1;
+	//
+	//	if second argument matches "-d" then
+	//	set dflag to decrypt mode (-1).
+	//
+	if (strcmp(argv[2], "-d") == 0)
+		dflag = -1;
+	//
+	//	key - number of bytes to shift
+	//
 	int key = atoi(argv[3]);
 
+	//
+	//	EncryptFile() at filePath using the dflag and key
+	//
 	EncryptFile(filePath, dflag, key);
+
+	//	Happy ending :)
+	//
+	return 0;
 }
