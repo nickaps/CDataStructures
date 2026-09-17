@@ -264,7 +264,7 @@ int main() {
 		ListAdd(list, i * 3);
 	}
 	
-	printf("%d", ListFindAt(list, 39999999));
+	printf("%d\n", ListFindAt(list, 39999999));
 
 	FreeList(list);
 
